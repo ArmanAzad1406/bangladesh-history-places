@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Historical Places of Bangladesh 🇧🇩</title>
+<link rel="stylesheet" href="style.css">
+<style>
+/* If you don't want to use style.css, the styles below will work */
+body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin:0; padding:0; background:#f0f8ff; color:#333; }
+header { background-color: #006a4e; color:white; padding:20px; text-align:center; }
+header h1 { margin:0; }
+#search { display:block; margin:20px auto; padding:10px; width:80%; max-width:400px; border-radius:50px; border:1px solid #ccc; outline:none; }
+#places-container { display:grid; grid-template-columns: repeat(auto-fit, minmax(250px,1fr)); gap:20px; padding:20px; }
+.place-card { background:white; border-radius:10px; overflow:hidden; box-shadow:0 4px 10px rgba(0,0,0,0.1); text-align:center; cursor:pointer; transition: transform 0.2s, box-shadow 0.2s; }
+.place-card:hover { transform: translateY(-5px); box-shadow:0 8px 20px rgba(0,0,0,0.2); }
+.place-card img { width:100%; height:150px; object-fit:cover; }
+.place-card h3 { margin:10px 0; color:#006a4e; }
+.place-card p { margin:5px 10px 15px 10px; font-size:14px; }
+.history { display:none; text-align:left; background:#e0f7fa; padding:15px; margin:10px; border-radius:8px; font-size:14px; }
+footer { text-align:center; padding:15px; background-color:#004d3a; color:white; }
+</style>
+</head>
+<body>
+
+<header>
+<h1>Historical Places of Bangladesh 🇧🇩</h1>
+</header>
+
+<input type="text" id="search" placeholder="Search by name or city...">
+<div id="places-container"></div>
+
+<footer>&copy; 2026 Bangladesh Heritage</footer>
+
+<script>
+// ===========================
+// Step 3: Add your places here
+// ===========================
+
+const places = [
+  {
+    name:"Lalbagh Fort",
+    city:"Dhaka",
+    image:"images/lalbagh.jpg",  // <-- Replace with your .jpg filename in images/
+    description:"17th-century Mughal fort in Dhaka.",
+    history:`Lalbagh Fort, also known as Fort Aurangabad, is a 17th-century Mughal fort complex that remained unfinished due to the death of its governor. The fort has several structures including the tomb of Pari Bibi, the Diwan-i-Aam, and beautiful Mughal gardens. It reflects the grandeur of Mughal architecture and the history of Dhaka during Mughal rule. The fort played a strategic role in the city’s defense and is now a major tourist attraction.`
+  },
+  {
+    name:"Ahsan Manzil",
+    city:"Dhaka",
+    image:"images/ahsanmanzil.jpg",  // <-- Replace with your .jpg filename
+    description:"The Pink Palace of Dhaka.",
+    history:`Ahsan Manzil was the official residential palace of the Nawab of Dhaka. Built in the late 19th century, the palace became a symbol of the city's aristocracy. It was used for political meetings and cultural events. The architecture combines European and Mughal styles. After the fall of the Nawabs, it was abandoned but later restored as a museum, preserving artifacts, furniture, and the lifestyle of the Nawab era.`
+  },
+  {
+    name:"Shat Gambuj Mosque",
+    city:"Bagerhat",
+    image:"images/shatgambuj.jpg",  // <-- Replace with your .jpg filename
+    description:"UNESCO World Heritage site.",
+    history:`The Shat Gambuj Mosque, meaning "Sixty Dome Mosque", was built in the 15th century by Khan Jahan Ali, a Muslim saint and ruler. It originally had 77 domes, though only 60 remain today. The mosque reflects the Bengal Sultanate architectural style and served as a center for Islamic education and worship. It is a UNESCO World Heritage site and a testament to the history of Islam in Bengal.`
+  }
+  // Add more places here:
+  // {
+  //   name:"Place Name",
+  //   city:"City",
+  //   image:"images/yourimage.jpg",
+  //   description:"Short description",
+  //   history:`Long history essay here...`
+  // }
+];
+
+// ===========================
+// Step 4: Display places & handle clicks
+// ===========================
+
+const container = document.getElementById('places-container');
+
+function displayPlaces(list){
+  container.innerHTML = '';
+  list.forEach((place, index)=>{
+    const card = document.createElement('div');
+    card.className = 'place-card';
+    card.innerHTML = `
+      <img src="${place.image}" alt="${place.name}">
+      <h3>${place.name}</h3>
+      <p><strong>City:</strong> ${place.city}</p>
+      <p>${place.description}</p>
+      <div class="history" id="history-${index}">${place.history}</div>
+    `;
+    container.appendChild(card);
+
+    card.addEventListener('click', ()=>{
+      const hist = document.getElementById(`history-${index}`);
+      hist.style.display = hist.style.display === 'block' ? 'none' : 'block';
+    });
+  });
+}
+
+displayPlaces(places);
+
+document.getElementById('search').addEventListener('input', function(){
+  const filter = this.value.toLowerCase();
+  const filtered = places.filter(p =>
+    p.name.toLowerCase().includes(filter) || p.city.toLowerCase().includes(filter)
+  );
+  displayPlaces(filtered);
+});
+</script>
+
+</body>
+</html>
